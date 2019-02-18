@@ -2,26 +2,27 @@
 
 [![sites](mcuyun/mcuyun.png)](http://www.mcuyun.com)
 
+#### 归属：[cortex A72系列](https://github.com/mcuyun/CA72)
 #### [关于悠云](https://github.com/mcuyun/whyme)可访问 www.mcuyun.com
-
 
 ## [简介](https://github.com/mcuyun/RK3399/wiki)
 
-瑞芯微最新顶级ARM处理器，也是可找到的最强开源处理器了，RK3399PRO带有NPU，安全能满足边缘计算的需求
+当前瑞芯微最顶级ARM处理器，也是开源最顶级的处理器，适合高端嵌入式设备
 
-#### [linux系统](https://github.com/rockchip-linux/kernel.git)
+安兔兔跑分 80000+ 
 
+#### [linux](https://github.com/rockchip-linux/kernel.git)
+
+官方开源Linux固件
 
 #### [docs](https://github.com/mcuyun/RK3399/wiki)
 
-包括芯片相关资料
- 
+包括参考设计等文档资料
 
 
 
 ---
 
-###  www.mcuyun.com   
+###  [悠云，为嵌入式](http://www.mcuyun.com)   
 ###  qitas@qitas.cn
-
 
