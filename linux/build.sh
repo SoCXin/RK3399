@@ -104,23 +104,6 @@ if [ ! -d $ROOT/output ]; then
     mkdir -p $ROOT/output
 fi
 
-MENUSTR="Welcome to RK3399 Build System. Pls choose Platform."
-##########################################
-OPTION=$(whiptail --title "RK3399 RK3399 Build System" \
-	--menu "$MENUSTR" 10 60 3 --cancel-button Exit --ok-button Select \
-	"0"  "RK3399 RK3399" \
-	3>&1 1>&2 2>&3)
-
-if [ $OPTION = "0" ]; then
-	export PLATFORM="rk3399"
-else
-	echo -e "\e[1;31m Pls select correct platform \e[0m"
-	exit 0
-fi
-#cd $ROOT/scripts
-#./Version_Change.sh $PLATFORM
-#cd -
-
 ##########################################
 ## Root Password check
 for ((i = 0; i < 5; i++)); do
@@ -148,22 +131,39 @@ done
 echo $PASSWD | sudo ls &> /dev/null 2>&1
 
 ## Check cross tools
-if [ ! -d $ROOT/toolchain/gcc-linaro-aarch -o ! -d $ROOT/toolchain/gcc-linaro-aarch/gcc-linaro/arm-linux-gnueabi ]; then
-	cd $SCRIPTS
-	./install_toolchain.sh
-	cd -
-fi
+function prepare_toolchain()
+{ 
+	sudo apt-get -y --no-install-recommends --fix-missing install \
+	bsdtar mtools u-boot-tools pv bc \
+	gcc automake make \
+	lib32z1 lib32z1-dev qemu-user-static \
+	dosfstools libncurses5-dev
+}
+function get_toolchain()
+{ 
+
+	str="aarch64-linux-gnu-ar :  "
+	ret=`whereis aarch64-linux-gnu-ar`
+	if [ ${#ret} -lt ${#str} ]; then
+		cd $ROOT
+		git clone --depth=1 https://github.com/sochub/aarch-linux.git
+		mv $ROOT/aarch-linux $ROOT/toolchain
+    	fi
+	str="arm-linux-gnueabi-ar :  "
+	ret=`whereis arm-linux-gnueabi-ar`
+	if [ ${#ret} -lt ${#str} ]; then
+		cd $ROOT
+		git clone --depth=1 https://github.com/sochub/arm-linux-eabi.git
+		mv $ROOT/arm-linux-eabi $ROOT/toolchain
+    	fi
+}
+
+
+get_toolchain
+prepare_toolchain
 
 if [ ! -d $ROOT/output ]; then
     mkdir -p $ROOT/output
-fi
-
-## prepare development tools
-if [ ! -f $ROOT/output/.tmp_toolchain ]; then
-	cd $SCRIPTS
-	sudo ./Prepare_toolchain.sh
-	touch $ROOT/output/.tmp_toolchain
-	cd -
 fi
 
 MENUSTR="Pls select build option"
