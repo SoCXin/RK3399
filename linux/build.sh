@@ -133,11 +133,11 @@ echo $PASSWD | sudo ls &> /dev/null 2>&1
 ## Check cross tools
 function prepare_toolchain()
 { 
-	sudo apt-get -y --no-install-recommends --fix-missing install \
+	sudo apt -y --no-install-recommends --fix-missing install \
 	bsdtar mtools u-boot-tools pv bc \
 	gcc automake make \
 	lib32z1 lib32z1-dev qemu-user-static \
-	dosfstools libncurses5-dev
+	dosfstools libncurses5-dev libssl-dev
 }
 function get_toolchain()
 { 
