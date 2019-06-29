@@ -3,6 +3,8 @@
 #export ARCH=arm64
 #export CROSS_COMPILE=arm-linux-gnueabihf-
 
+echo -e "make uboot \n${Line}"
+
 LOCALPATH=$(pwd)
 OUT=${LOCALPATH}/output
 TOOLPATH=${LOCALPATH}/external/rkbin/tools

@@ -153,10 +153,6 @@ function get_toolchain()
     	fi
 }
 
-
-get_toolchain
-prepare_toolchain
-
 if [ ! -d $ROOT/output ]; then
     mkdir -p $ROOT/output
 fi
@@ -176,6 +172,11 @@ OPTION=$(whiptail --title "RK3399 Build System" \
 
 	#"0"   "Build Release Image" \
 	#"7"   "Build system image" \
+
+get_toolchain
+prepare_toolchain
+
+
 if [ $OPTION = "0" -o $OPTION = "0" ]; then
 	sudo echo ""
 	clear
