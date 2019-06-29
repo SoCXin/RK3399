@@ -141,20 +141,15 @@ function prepare_toolchain()
 }
 function get_toolchain()
 { 
-
-	str="aarch64-linux-gnu-ar :  "
-	ret=`whereis aarch64-linux-gnu-ar`
-	if [ ${#ret} -lt ${#str} ]; then
+	if [ ! -d $ROOT/toolchain/gcc-linaro-aarch ]; then
 		cd $ROOT
 		git clone --depth=1 https://github.com/sochub/aarch-linux.git
-		mv $ROOT/aarch-linux $ROOT/toolchain
+		mv aarch-linux toolchain
     	fi
-	str="arm-linux-gnueabi-ar :  "
-	ret=`whereis arm-linux-gnueabi-ar`
-	if [ ${#ret} -lt ${#str} ]; then
-		cd $ROOT
+	if [ ! -d $ROOT/toolchain/gcc-linaro-aarch/gcc-linaro ]; then
+		cd $ROOT/toolchain/gcc-linaro-aarch
 		git clone --depth=1 https://github.com/sochub/arm-linux-eabi.git
-		mv $ROOT/arm-linux-eabi $ROOT/toolchain
+		mv arm-linux-eabi gcc-linaro
     	fi
 }
 
