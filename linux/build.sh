@@ -258,8 +258,10 @@ if [ $OPTION = "0" -o $OPTION = "0" ]; then
 		export PLATFORM=$PLATFORM
                 sudo ./00_rootfs_build.sh $DISTRO $PLATFORM $TYPE
                 sudo ./01_rootfs_build.sh $DISTRO $TMP_TYPE
+			
 	fi
 	if [ $TMP = "0" ]; then 
+				echo -e "\nend it\n"
                 sudo ./build_image.sh $DISTRO $PLATFORM $TYPE $VAR
                 whiptail --title "RK3399 Build System" --msgbox "Succeed to build Image" \
                                 10 40 0 --ok-button Continue
