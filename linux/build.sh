@@ -1,9 +1,11 @@
 #!/bin/bash
 set -e
 ##########################################
-# This script is used to build RK3399 Linux.
-# by: Qitas
-# Date: 2019-03-12
+##
+## Build RK3399 Linux
+## 
+## Maintainer: Buddy <buddy.zhang@aliyun.com>
+## Maintainer: Leeboby <leeboby@aliyun.com>
 ##########################################
 export ROOT=`pwd`
 SCRIPTS=$ROOT/scripts
@@ -93,7 +95,7 @@ Update_check()
 {
 	MENUSTR="Pls choose SD or EMMC"
 	##########################################
-	VAR=$(whiptail --title "RK3399 RK3399 Build System" \
+	VAR=$(whiptail --title "RK3399 Build System" \
     	--menu "$MENUSTR" 10 60 3 --cancel-button Exit --ok-button Select \
     	"0"  "SD Card" \
     	"1"  "EMMC" \
@@ -103,6 +105,23 @@ Update_check()
 if [ ! -d $ROOT/output ]; then
     mkdir -p $ROOT/output
 fi
+
+MENUSTR="Welcome to RK3399 Build System. Pls choose Platform."
+##########################################
+OPTION=$(whiptail --title " RK3399 Build System" \
+	--menu "$MENUSTR" 10 60 3 --cancel-button Exit --ok-button Select \
+	"0"  "RK3399" \
+	3>&1 1>&2 2>&3)
+
+if [ $OPTION = "0" ]; then
+	export PLATFORM="rk3399"
+else
+	echo -e "\e[1;31m Pls select correct platform \e[0m"
+	exit 0
+fi
+#cd $ROOT/scripts
+#./Version_Change.sh $PLATFORM
+#cd -
 
 ##########################################
 ## Root Password check
@@ -153,9 +172,24 @@ function get_toolchain()
     	fi
 }
 
+# ## Check cross tools
+# if [ ! -d $ROOT/toolchain/gcc-linaro-aarch -o ! -d $ROOT/toolchain/gcc-linaro-aarch/gcc-linaro/arm-linux-gnueabi ]; then
+# 	cd $SCRIPTS
+# 	./install_toolchain.sh
+# 	cd -
+# fi
+
 if [ ! -d $ROOT/output ]; then
     mkdir -p $ROOT/output
 fi
+
+# ## prepare development tools
+# if [ ! -f $ROOT/output/.tmp_toolchain ]; then
+# 	cd $SCRIPTS
+# 	sudo ./Prepare_toolchain.sh
+# 	touch $ROOT/output/.tmp_toolchain
+# 	cd -
+# fi
 
 MENUSTR="Pls select build option"
 
@@ -167,16 +201,13 @@ OPTION=$(whiptail --title "RK3399 Build System" \
 	"3"   "Update kernel Image" \
 	"4"   "Update Module" \
 	"5"   "Update Uboot" \
-	"6"   "Install Image into EMMC" \
 	3>&1 1>&2 2>&3)
-
-	#"0"   "Build Release Image" \
-	#"7"   "Build system image" \
 
 get_toolchain
 prepare_toolchain
 
-
+	#"0"   "Build Release Image" \
+	#"7"   "Build system image" \
 if [ $OPTION = "0" -o $OPTION = "0" ]; then
 	sudo echo ""
 	clear
@@ -258,10 +289,8 @@ if [ $OPTION = "0" -o $OPTION = "0" ]; then
 		export PLATFORM=$PLATFORM
                 sudo ./00_rootfs_build.sh $DISTRO $PLATFORM $TYPE
                 sudo ./01_rootfs_build.sh $DISTRO $TMP_TYPE
-			
 	fi
 	if [ $TMP = "0" ]; then 
-				echo -e "\nend it\n"
                 sudo ./build_image.sh $DISTRO $PLATFORM $TYPE $VAR
                 whiptail --title "RK3399 Build System" --msgbox "Succeed to build Image" \
                                 10 40 0 --ok-button Continue

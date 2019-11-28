@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 if [ -z $ROOT ]; then
 	ROOT=`cd .. && pwd`
@@ -15,7 +15,6 @@ if [ $VAR = "0" ]; then
 elif [ $VAR = "1" ]; then
 	cp $EXTLINUXPATH/rk3399_emmc_boot.conf $EXTLINUXPATH/rk3399.conf
 else
-
 	exit 0
 fi
 sync
