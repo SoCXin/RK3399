@@ -4,8 +4,6 @@ set -e
 ##
 ## Build RK3399 Linux
 ## 
-## Maintainer: Buddy <buddy.zhang@aliyun.com>
-## Maintainer: Leeboby <leeboby@aliyun.com>
 ##########################################
 export ROOT=`pwd`
 SCRIPTS=$ROOT/scripts

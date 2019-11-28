@@ -1,0 +1,6 @@
+.vscode/
+uboot/*.bin
+uboot/*.img
+uboot/u-boot*
+uboot/tools/*.o*
+kernel/.tmp*
